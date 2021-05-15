@@ -9,12 +9,10 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const contextToken = new HttpContextToken<boolean>(() => false);
-
-export const logRequest = () => {
-  return new HttpContext().set(contextToken, true);
-};
-
+const LOG_TOKEN = new HttpContextToken<boolean>(() => false);
+export function logRequest(){
+  return new HttpContext().set(LOG_TOKEN, true);
+}
 @Injectable()
 export class ContextInterceptor implements HttpInterceptor {
   constructor() {}
@@ -23,8 +21,8 @@ export class ContextInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (request.context.get(contextToken) === true) {
-      console.log(`request ${request.url} logged`);
+    if(request.context.get(LOG_TOKEN) === true){
+      console.log(`${request.url} is logged`)
     }
     return next.handle(request);
   }

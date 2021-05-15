@@ -6,12 +6,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContextInterceptor } from './context.interceptor';
-import { MyAppDirective } from './my-app.directive';
 import { SampleComponent } from './sample/sample.component';
+import { MyAppDirective } from './my-app.directive';
 
 @NgModule({
-  declarations: [AppComponent, MyAppDirective, SampleComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  declarations: [AppComponent, SampleComponent, MyAppDirective],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ContextInterceptor, multi: true },
   ],

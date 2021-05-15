@@ -1,5 +1,5 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { logRequest } from './context.interceptor';
 import { MyAppService } from './my-app.service';
 
 @Component({
@@ -7,13 +7,11 @@ import { MyAppService } from './my-app.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit{
-  title = 'angular12-app';
-  constructor(private myService: MyAppService) {}
-  async ngOnInit() {
-    await this.myService.getUsers({
-      context: logRequest()
-    });
-    console.log('api completed')
+export class AppComponent implements OnInit {
+  title = null;
+  constructor(private userService: MyAppService) {}
+  ngOnInit(): void {
+    const params = new HttpParams().appendAll({ test: 'value', ping: 1 });
+    this.userService.getUsers({ params });
   }
 }

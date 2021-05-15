@@ -1,5 +1,5 @@
-import { HttpParams, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { logRequest } from '../context.interceptor';
 import { MyAppService } from '../my-app.service';
 
 @Component({
@@ -32,9 +32,8 @@ export class SampleComponent implements OnInit {
   constructor(private userService: MyAppService) {}
 
   ngOnInit(): void {
-    console.log('inside sample component');
-    const params = new HttpParams();
-    const newParams = params.appendAll({ test: 'value', ping: 1 });
-    this.userService.getUsers({ params: newParams });
+    this.userService.getUsers({
+      context: logRequest(),
+    });
   }
 }
